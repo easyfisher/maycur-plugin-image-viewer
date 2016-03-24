@@ -7,7 +7,7 @@
     <keywords>maycur,device</keywords>
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="Device">
+            <feature name="ImageViewer">
                 <param name="ios-package" value="MCImageViewer"/>
             </feature>
         </config-file>

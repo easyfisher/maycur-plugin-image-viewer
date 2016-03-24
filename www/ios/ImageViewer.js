@@ -7,11 +7,11 @@
 
 var exec = require('cordova/exec');
 
-function ImageViewer() {
-    this._callback;
+var ImageViewer = function() {
+
 }
 
-ImageViewer.prototype.show = function(options) {
+ImageViewer.show = function(options) {
 
     exec(null,
       null,
@@ -21,13 +21,8 @@ ImageViewer.prototype.show = function(options) {
     );
 };
 
-var imageViewer = new ImageViewer();
-module.exports = imageViewer;
+ImageViewer.alert = function() {  
+    alert("I am a js plugin");  
+}; 
 
-// Make plugin work under window.plugins
-if (!window.plugins) {
-    window.plugins = {};
-}
-if (!window.plugins.imageViewer) {
-    window.plugins.imageViewer = imageViewer;
-}
+module.exports = ImageViewer;
