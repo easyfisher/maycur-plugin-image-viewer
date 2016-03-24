@@ -7,7 +7,6 @@
 
 var exec = require('cordova/exec');
 
-
 function ImageViewer() {
     this._callback;
 }
