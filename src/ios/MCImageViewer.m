@@ -15,8 +15,6 @@
 {
     NSDictionary *params = [command.arguments objectAtIndex:0];
     NSString *message = [params objectForKey:@"message"];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"666" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    [alert show];
     
     self.scrollView = [[UIScrollView alloc] init];
     self.scrollView.backgroundColor = [UIColor redColor];
@@ -35,10 +33,24 @@
     self.containerController = [[UIViewController alloc] init];
     self.containerController.view = self.scrollView;
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.containerController];
+    self.containerController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneDidClick)];
     
     [self.webView.superview addSubview:self.navigationController.view];
     [UIView  animateWithDuration:0.35 animations:^(){
         self.scrollView.frame = CGRectMake(0, 0, width, height);
+    }];
+}
+
+- (void)doneDidClick {
+    CGFloat width = self.webView.bounds.size.width;
+    CGFloat height = self.webView.bounds.size.height;
+    [UIView animateWithDuration:0.35 animations:^(){
+        self.scrollView.frame = CGRectMake(width/2, height/2, 0, 0);
+    } completion:^(BOOL finished){
+        [self.navigationController.view removeFromSuperview];
+        self.navigationController = nil;
+        self.containerController = nil;
+        self.scrollView = nil;
     }];
 }
 
