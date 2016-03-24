@@ -12,10 +12,9 @@ var ImageViewer = function() {
 }
 
 ImageViewer.show = function(options) {
-
     exec(null,
       null,
-      "MCImageViewer",
+      "ImageViewer",
       "show",
       [options]
     );
