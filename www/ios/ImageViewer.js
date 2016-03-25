@@ -11,17 +11,13 @@ var ImageViewer = function() {
 
 }
 
-ImageViewer.show = function(options) {
+ImageViewer.show = function(urls, index) {
     exec(null,
       null,
       "ImageViewer",
       "show",
-      [options]
+      [urls, index]
     );
 };
-
-ImageViewer.alert = function() {  
-    alert("I am a js plugin");  
-}; 
 
 module.exports = ImageViewer;
