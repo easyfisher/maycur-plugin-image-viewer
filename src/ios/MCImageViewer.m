@@ -29,7 +29,8 @@
     self.scrollView.backgroundColor = [UIColor blackColor];
     CGFloat width = self.webView.bounds.size.width;
     CGFloat height = self.webView.bounds.size.height;
-    self.scrollView.frame = CGRectMake(width/2, height/2, 0, 0);
+    self.scrollView.frame = CGRectMake(0, 0, width, height);
+    self.scrollView.alpha = 0;
     
     for (int i = 0; i < urls.count; i++) {
         UIImageView *view = [[UIImageView alloc] init];
@@ -48,7 +49,7 @@
         }];
     }
     self.scrollView.pagingEnabled = YES;
-    self.scrollView.contentSize = CGSizeMake(3 * width, 0);
+    self.scrollView.contentSize = CGSizeMake(urls.count * width, 0);
     self.scrollView.contentOffset = CGPointMake(index * width, 0);
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDidTap)];
@@ -56,15 +57,13 @@
     
     [self.webView.superview addSubview:self.scrollView];
     [UIView  animateWithDuration:0.35 animations:^(){
-        self.scrollView.frame = CGRectMake(0, 0, width, height);
+        self.scrollView.alpha = 1;
     }];
 }
 
 - (void)imageDidTap {
-    CGFloat width = self.webView.bounds.size.width;
-    CGFloat height = self.webView.bounds.size.height;
     [UIView animateWithDuration:0.35 animations:^(){
-        self.scrollView.frame = CGRectMake(width/2, height/2, 0, 0);
+        self.scrollView.alpha = 0;
     } completion:^(BOOL finished){
         [self.scrollView removeFromSuperview];
         self.scrollView = nil;
