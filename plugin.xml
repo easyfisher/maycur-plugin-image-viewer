@@ -20,7 +20,7 @@
         <source-file src="src/ios/MCImageViewer.m" />
     </platform>
 
-    <platform name="android">
+    <!-- <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="ImageViewer">
                 <param name="android-package" value=" com.maycur.plugin.ImageViewer"/>
@@ -28,5 +28,5 @@
         </config-file>
         <header-file src="src/ios/MCImageViewer.h" />
         <source-file src="src/ios/MCImageViewer.m" />
-    </platform>
+    </platform> -->
 </plugin>
