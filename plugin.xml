@@ -5,16 +5,27 @@
     <description>Maycur Image Viewer Plugin for iOS</description>
     <license>Maycur</license>
     <keywords>maycur,device</keywords>
+
+    <js-module src="www/ios/ImageViewer.js" name="ImageViewer">
+            <clobbers target="maycur.imageViewer" />
+        </js-module>
+
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="ImageViewer">
                 <param name="ios-package" value="MCImageViewer"/>
             </feature>
         </config-file>
-        <js-module src="www/ios/ImageViewer.js" name="ImageViewer">
-            <clobbers target="imageViewer" />
-        </js-module>
+        <header-file src="src/ios/MCImageViewer.h" />
+        <source-file src="src/ios/MCImageViewer.m" />
+    </platform>
 
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ImageViewer">
+                <param name="android-package" value=" com.maycur.plugin.ImageViewer"/>
+            </feature>
+        </config-file>
         <header-file src="src/ios/MCImageViewer.h" />
         <source-file src="src/ios/MCImageViewer.m" />
     </platform>
