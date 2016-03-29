@@ -2,11 +2,11 @@
 <plugin xmlns="http://maycur.com/mobile/plugins/1.0"
         id="maycur-plugin-image-viewer" version="0.1.0">
     <name>ImageViewer</name>
-    <description>Maycur Image Viewer Plugin for iOS</description>
+    <description>Maycur Image Viewer Plugin</description>
     <license>Maycur</license>
-    <keywords>maycur,device</keywords>
+    <keywords>maycur,image</keywords>
 
-    <js-module src="www/ios/ImageViewer.js" name="ImageViewer">
+    <js-module src="www/ImageViewer.js" name="ImageViewer">
             <clobbers target="maycur.imageViewer" />
         </js-module>
 
@@ -16,6 +16,7 @@
                 <param name="ios-package" value="MCImageViewer"/>
             </feature>
         </config-file>
+
         <header-file src="src/ios/MCImageViewer.h" />
         <source-file src="src/ios/MCImageViewer.m" />
     </platform>
@@ -23,9 +24,10 @@
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="ImageViewer">
-                <param name="android-package" value=" com.maycur.plugin.ImageViewer"/>
+                <param name="android-package" value="com.maycur.plugin.ImageViewer"/>
             </feature>
         </config-file>
+
         <source-file src="src/android/ImageViewer.java" target-dir="src/com/maycur/plugin" />
     </platform>
 </plugin>
