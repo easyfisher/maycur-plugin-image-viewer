@@ -8,8 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.ionicframework.myapp543873.R;
-
 public class ImageViewerActivity extends FragmentActivity {
 
     private ViewPager mPager;
@@ -19,12 +17,12 @@ public class ImageViewerActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_viewer);
+        setContentView(getResources().getIdentifier("activity_image_viewer", "layout", getPackageName()));
 
         mUrls = getIntent().getExtras().getStringArray("extra_urls");
         int index = getIntent().getIntExtra("extra_index", 0);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(getResources().getIdentifier("pager", "id", getPackageName()));
         mPagerAdapter = new ImageViewerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(index);

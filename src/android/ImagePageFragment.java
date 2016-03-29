@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.ionicframework.myapp543873.R;
-
 import java.io.InputStream;
 
 /**
@@ -34,15 +32,16 @@ public class ImagePageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_image_page, container, false);
-        rootView.findViewById(R.id.lyt_content).setOnClickListener(new View.OnClickListener() {
+        int rootId = getResources().getIdentifier("fragment_image_page", "layout", getActivity().getPackageName());
+        ViewGroup rootView = (ViewGroup) inflater.inflate(rootId, container, false);
+        rootView.findViewById(getResources().getIdentifier("lyt_content", "id", getActivity().getPackageName())).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
-        ImageView imageView = (ImageView) rootView.findViewById(R.id.iv_content);
-        ProgressBar indicator = (ProgressBar) rootView.findViewById(R.id.pb_loading);
+        ImageView imageView = (ImageView) rootView.findViewById(getResources().getIdentifier("iv_content", "id", getActivity().getPackageName()));
+        ProgressBar indicator = (ProgressBar) rootView.findViewById(getResources().getIdentifier("pb_loading", "id", getActivity().getPackageName()));
         indicator.getIndeterminateDrawable().setColorFilter(0xffdddddd, android.graphics.PorterDuff.Mode.MULTIPLY);
         Bundle arguments = getArguments();
         if (arguments != null) {
