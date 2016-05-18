@@ -2,6 +2,7 @@ package com.maycur.plugin;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -46,7 +48,12 @@ public class ImagePageFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             String url = arguments.getString(PARAM_URL);
-            new DownloadImageTask(imageView, indicator).execute(url);
+            if (url.startsWith("file:///")) {
+                imageView.setImageURI(Uri.parse(url));
+                indicator.setVisibility(View.GONE);
+            } else {
+                new DownloadImageTask(imageView, indicator).execute(url);
+            }
         }
 
         return rootView;
