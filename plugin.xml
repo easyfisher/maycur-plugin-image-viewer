@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://maycur.com/mobile/plugins/1.0"
-        id="maycur-plugin-image-viewer" version="1.0.0">
+        id="maycur-plugin-image-viewer" version="1.1.0">
     <name>ImageViewer</name>
     <description>Maycur Image Viewer Plugin</description>
     <license>Maycur</license>
