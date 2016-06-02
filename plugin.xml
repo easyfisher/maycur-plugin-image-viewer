@@ -19,6 +19,8 @@
 
         <header-file src="src/ios/MCImageViewer.h" />
         <source-file src="src/ios/MCImageViewer.m" />
+        <header-file src="src/ios/MCImageSpinner.h" />
+        <source-file src="src/ios/MCImageSpinner.m" />
     </platform>
 
     <platform name="android">

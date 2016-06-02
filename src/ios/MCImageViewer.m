@@ -1,9 +1,10 @@
 #import "MCImageViewer.h"
 #import <Cordova/CDVPlugin.h>
+#import "MCImageSpinner.h"
 
-@interface MCImageViewer()
+@interface MCImageViewer() <MCImageSpinnerDelegate>
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) MCImageSpinner *spinner;
 
 @end
 
@@ -25,60 +26,31 @@
         index = urls.count - 1;
     }
     
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.backgroundColor = [UIColor blackColor];
+    self.spinner = [[MCImageSpinner alloc] initWithUrls:urls default:index];
+    self.spinner.delegate = self;
+    self.spinner.alpha = 0;
+    
     CGFloat width = self.webView.bounds.size.width;
     CGFloat height = self.webView.bounds.size.height;
-    self.scrollView.frame = CGRectMake(0, 0, width, height);
-    self.scrollView.alpha = 0;
+    self.spinner.frame = CGRectMake(0, 0, width, height);
     
-    for (int i = 0; i < urls.count; i++) {
-        UIImageView *view = [[UIImageView alloc] init];
-        view.frame = CGRectMake(width * i, 0, width, height);
-        view.contentMode = UIViewContentModeScaleAspectFit;
-        [self.scrollView addSubview:view];
-        
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        indicator.center = CGPointMake(width * (i + 0.5), height/2);
-        [indicator startAnimating];
-        [self.scrollView addSubview:indicator];
-        
-        [self processImageWithURLString:urls[i] completion:^(NSData *data){
-            view.image = [UIImage imageWithData:data];
-            [indicator stopAnimating];
-        }];
-    }
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.contentSize = CGSizeMake(urls.count * width, 0);
-    self.scrollView.contentOffset = CGPointMake(index * width, 0);
-    
-    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDidTap)];
-    [self.scrollView addGestureRecognizer:gesture];
-    
-    [self.webView.superview addSubview:self.scrollView];
+    [self.webView.superview addSubview:self.spinner];
     [UIView  animateWithDuration:0.35 animations:^(){
-        self.scrollView.alpha = 1;
+        self.spinner.alpha = 1;
     }];
 }
 
 - (void)imageDidTap {
     [UIView animateWithDuration:0.35 animations:^(){
-        self.scrollView.alpha = 0;
+        self.spinner.alpha = 0;
     } completion:^(BOOL finished){
-        [self.scrollView removeFromSuperview];
-        self.scrollView = nil;
+        [self.spinner removeFromSuperview];
+        self.spinner = nil;
     }];
 }
 
-- (void)processImageWithURLString:(NSString *)urlString completion:(void (^)(NSData *data))completion {
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData * data = [NSData dataWithContentsOfURL:url];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(data);
-        });
-    });
-}
-
 @end
+
+
+
+
