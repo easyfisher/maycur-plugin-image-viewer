@@ -5,15 +5,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import java.io.File;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -36,20 +39,27 @@ public class ImagePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         int rootId = getResources().getIdentifier("fragment_image_page", "layout", getActivity().getPackageName());
         ViewGroup rootView = (ViewGroup) inflater.inflate(rootId, container, false);
-        rootView.findViewById(getResources().getIdentifier("lyt_content", "id", getActivity().getPackageName())).setOnClickListener(new View.OnClickListener() {
+        SubsamplingScaleImageView imageView = (SubsamplingScaleImageView) rootView.findViewById(getResources().getIdentifier("iv_content", "id", getActivity().getPackageName()));
+        imageView.setMaxScale(5);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
-        ImageView imageView = (ImageView) rootView.findViewById(getResources().getIdentifier("iv_content", "id", getActivity().getPackageName()));
         ProgressBar indicator = (ProgressBar) rootView.findViewById(getResources().getIdentifier("pb_loading", "id", getActivity().getPackageName()));
         indicator.getIndeterminateDrawable().setColorFilter(0xffdddddd, android.graphics.PorterDuff.Mode.MULTIPLY);
         Bundle arguments = getArguments();
         if (arguments != null) {
             String url = arguments.getString(PARAM_URL);
             if (url.startsWith("file:///")) {
-                imageView.setImageURI(Uri.parse(url));
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(url));
+                    imageView.setImage(ImageSource.bitmap(bitmap));
+                } catch (IOException e) {
+                    Log.d("ImagePageFragment", "Invalid image uri");
+                }
+
                 indicator.setVisibility(View.GONE);
             } else {
                 new DownloadImageTask(imageView, indicator).execute(url);
@@ -60,11 +70,12 @@ public class ImagePageFragment extends Fragment {
     }
 }
 
+
 class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView mImageView;
+    SubsamplingScaleImageView mImageView;
     ProgressBar mIndicator;
 
-    public DownloadImageTask(ImageView image, ProgressBar indicator) {
+    public DownloadImageTask(SubsamplingScaleImageView image, ProgressBar indicator) {
         mImageView = image;
         mIndicator = indicator;
     }
@@ -82,7 +93,7 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        mImageView.setImageBitmap(result);
+        mImageView.setImage(ImageSource.bitmap(result));
         mIndicator.setVisibility(View.GONE);
     }
 }

@@ -33,6 +33,7 @@
             <activity android:name="com.maycur.plugin.ImageViewerActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
         </config-file>
         <framework src="com.android.support:appcompat-v7:21+" />
+        <framework src="com.davemorrissey.labs:subsampling-scale-image-view:3.5.0" />
 
         <source-file src="src/android/ImageViewer.java" target-dir="src/com/maycur/plugin" />
         <source-file src="src/android/ImageViewerActivity.java" target-dir="src/com/maycur/plugin" />
