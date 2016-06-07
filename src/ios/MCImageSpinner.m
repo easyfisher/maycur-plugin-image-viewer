@@ -30,7 +30,7 @@
     if (self) {
         self.delegate = self;
         self.showsVerticalScrollIndicator = NO;
-        self.maximumZoomScale = 5;
+        self.maximumZoomScale = 4;
         
         self.imageView = [[UIImageView alloc] init];
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
